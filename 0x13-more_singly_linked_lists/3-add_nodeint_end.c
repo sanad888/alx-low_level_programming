@@ -2,33 +2,32 @@
 
 /**
  * add_nodeint_end - adds a new node at the end of a listint_t list
- * @head: pointer to head pointer of linked list
- * @n: data to add to new node
- * Return: address of new element, or NULL if failed
+ *
+ * @head: the listint_t argument (head)
+ * @n: the int inside the new node
+ *
+ * Return: a pointer to the added node
  */
 
-listint_t *add_nodeint_end(listint_t **head, const int n)
+listint_t	*add_nodeint_end(listint_t **head, const int n)
 {
+	listint_t *node = *head;
+	listint_t *new_node = NULL;
 
-	listint_t *new_node, *tmp;
-
-	new_node = malloc(sizeof(listint_t)); /* make new node and set values */
-	if (new_node == NULL)
-		return (NULL);
-
-	new_node->n = n;
-	new_node->next = NULL;
-
-	if (*head == NULL) /* account for empty list by pointing head to node */
-		*head = new_node;
-	else
+	new_node = malloc(sizeof(listint_t));
+	if (new_node)
 	{
-		tmp = *head; /* set tmp ptr to iterate w/o moving head ptr */
+		new_node->n = n;
+		new_node->next = NULL;
 
-		while (tmp->next != NULL) /* iterate till last node */
-			tmp = tmp->next;
-		tmp->next = new_node; /* link last node to new node */
+		if (!(*head))
+			*head = new_node;
+		else
+		{
+			while (node->next)
+				node = node->next;
+			node->next = new_node;
+		}
 	}
-
 	return (new_node);
 }
