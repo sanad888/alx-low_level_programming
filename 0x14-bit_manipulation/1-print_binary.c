@@ -1,27 +1,29 @@
-#include "main.h"
+#include "holberton.h"
 
 /**
- * print_binary - prints the binary representation of a number.
- * @n: decimal number
- * Return: void
+ * print_binary - Prints binary
+ *
+ * @n: Unsigned int
+ *
+ * Return: Converted number
  */
 
 void print_binary(unsigned long int n)
 {
-	int j, counter = 0;
-	unsigned long int current;
 
-	for (j = 63; j >= 0; j--)
+	if (n > 1)
 	{
-	current	= n >> j;
-	if (current & 1)
+	print_binary(n >> 1);
+	}
+
+	if (n & 1)
 	{
 		_putchar('1');
-			counter++;
 	}
-	else if (counter)
+	else
+	{
 		_putchar('0');
 	}
-	if (!counter)
-		_putchar('0');
+
+
 }
