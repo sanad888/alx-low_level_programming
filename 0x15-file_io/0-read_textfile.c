@@ -1,47 +1,39 @@
-#include "holberton.h"
+#include "main.h"
+#include <stdlib.h>
 
 /**
- * read_textfile - reads a text file and prints it.
- *
- * @filename: const char type pointer to file to be read
- *
- * @letters: size_t type
- *
- * Return: 0
- */
+* read_textfile- Read the file has extension text from the input to STDOUT.
+* @filename: the name of the file to be read
+* @letters: letters numbers in the file to be read
+* Return: w- actual num of bytes to be read and printed
+* zeroo if it fails or filename is NULL.
+*/
+
 
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	int fp;
-	ssize_t fpRead, fpWrite, fpClose;
-	char *lineBuffer;
+char  *store_var;
+ssize_t fD;
+ssize_t write_var;
+ssize_t bytes_num;
+/*open the file with read only mode by POSIX */
+fD = open(filename, O_RDONLY);
+/*check if it opened successfully*/
+if (fD == -1)
+return (0);
 
-	if (filename == NULL)
-		return (0);
+/* init space in the memory for the store variable*/
+store_var = malloc(sizeof(char) * letters);
+bytes_num = read(fD, store_var, letters);
+/* Write the contents of the store_var 'buf' to STDOUT*/
+ /* and store the actual number of bytes written in 'write_var'*/
+write_var = write(STDOUT_FILENO, store_var, bytes_num);
 
-	lineBuffer = malloc(sizeof(char) * letters);
-
-	if (lineBuffer == NULL)
-		return (-1);
-
-	fp = open(filename, O_RDONLY);
-
-	if (fp == -1)
-		return (0);
-
-	fpRead = read(fp, lineBuffer, letters);
-
-	if (fpRead == -1)
-		return (-1);
-
-	fpWrite = write(STDOUT_FILENO, lineBuffer, fpRead);
-
-	if (fpWrite == -1)
-		return (-1);
-	fpClose = close(fp);
-
-	if (fpClose == -1)
-		return (-1);
-
-	return (fpRead);
+/*Free the memory allocated for the buffer*/
+free(store_var);
+/*Close the FD*/
+close(fD);
+/*Return the actual number of bytes read and printed to STDOUT*/
+return (write_var);
 }
+
