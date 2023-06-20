@@ -1,1 +1,1 @@
-In this chapter we are going to look at .so files which are dynamically linked. 
+In this chapter we are going to look at so files which are dynamically linked. 
